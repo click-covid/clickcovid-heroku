@@ -422,28 +422,29 @@ layout_cities = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":
 	]),
 	html.Div(style={"height":20,}),	
 	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={}, children=[
+		html.Div(style={"width":"1%"}),
+		html.Div(style={"width":"49%"}, children=[
 			dcc.Graph(id='graph-cities', figure=graph_cities),
 			html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
 		]),
-		html.Div(style={"width":100}),
-		html.Div(style={"text-align":"center"}, children=[
-			html.Div(style={"width":300, "display":"flex"}, children=[
-				html.P(id='drop-out-states2', children=['Estado:'], style={"width":60}),    
+		html.Div(style={"width":"10%"}),
+		html.Div(style={"width":"40%", "text-align":"center"}, children=[
+			html.Div(style={"width":"100%", "display":"flex"}, children=[
+				html.P(id='drop-out-states2', children=['Estado:'], style={"width":"20%"}),    
 				dcc.Dropdown(
 					id="drop-states2",
 					options=[{'label': i, 'value': i} for i in states],
 					value="São Paulo",
-					style={"width":200}
+					style={"width":"80%"}
 				),
 			]),
-			html.Div(style={"width":300, "display":"flex"}, children=[
-				html.P(id='drop-out-cities', children=['Cidade:'], style={"width":60}),    
+			html.Div(style={"width":"100%", "display":"flex"}, children=[
+				html.P(id='drop-out-cities', children=['Cidade:'], style={"width":"20%"}),    
 				dcc.Dropdown(
 					id="drop-cities",
 					options=[{"label":"Todo o Estado", "value":0}] + [{'label': i, 'value': i} for i in stcts],
 					value=0,
-					style={"width":200}
+					style={"width":"80%"}
 				),
 			]),
 		]),
