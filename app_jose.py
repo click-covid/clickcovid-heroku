@@ -9,26 +9,9 @@ import pandas as pd
 import requests
 from io import BytesIO
 from zipfile import ZipFile
+import kaggle
+import os
 from scipy.integrate import odeint
-
-################################################
- ## SET UP MODEL EQUATIONS
-
-########### Define your variables
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='lightblue'
-color2='darkgreen'
-mytitle='Beer Comparison'
-tabtitle='Click COVID-19'
-myheading='Click COVID-19: uma ferramenta interativa para o estudo da pandemia'
-label1='IBU'
-label2='ABV'
-githublink='https://github.com/YokoSenju/flying-dog-beers'
-sourceurl='https://www.flyingdog.com/beers/'
-
-########### Set up the chart
 
 def f(a,c,mu,d,Pb):
         def Corona6(x,t):
@@ -365,405 +348,327 @@ beer_fig.update_layout(
     )
 )
 
+kaggle.api.dataset_download_files(r"unanimad/corona-virus-brazil", "corona-virus-brazil")
 
+zipp = ZipFile(r"corona-virus-brazil/corona-virus-brazil.zip")
 
+st_dat = pd.read_csv(zipp.open("brazil_covid19.csv"))
 
-################################################
+ct_dat = pd.read_csv(zipp.open("brazil_covid19_cities.csv"))
 
-st_dat = pd.read_csv(r"https://storage.googleapis.com/kagglesdsdata/datasets/549702/1162499/brazil_covid19.csv?GoogleAccessId=web-data@kaggle-161607.iam.gserviceaccount.com&Expires=1589944851&Signature=RWmeNQ%2BIQzTrQblJX5C6o9TF1tQcNCvlTwz5CbSqsSVaMqbB2eBtpOLwFlZ639M54OHybmTEsS%2FQVPa2Yk9JulE%2FbmwRStKcZD2lyGqsM4OKoL%2FDEUtjTA9VAL%2BcBrYTDaULIYoSnsEUx4FPoj3hxlAA6n%2Fbn4hFUgqJ38JErFcYLX7eQIXs4gI0ddeeZ86npcVdtJKcpSidL4dIjA8uEKhtyKt%2Fe7l%2F7tgpGs7kiHoTfjVeD8f35Q1qjnFmfEMeD2l2T%2FCyEBzxLzp%2BQkeQvoXrik3LeuCMk18%2FLFklPAuTc7XCeSqRCKf0kOCkCiJPIfgrN7NukdAJOXRcgb3ijQ%3D%3D&response-content-disposition=attachment%3B+filename%3Dbrazil_covid19.csv")
-
-url_ct_dat = requests.get(r"https://storage.googleapis.com/kaggle-data-sets/549702/1162499/compressed/brazil_covid19_cities.csv.zip?GoogleAccessId=web-data@kaggle-161607.iam.gserviceaccount.com&Expires=1589944913&Signature=Bdp%2FbEvGty6o672tmkAOEzE1%2BXr30nkniPr7pGbrpnMCcTK8yuB2vlQe18uhsYc5lceiNpu1IKCYwW2KiSljmqKbvgP97qEqxcbJdf2yzApieKPLxcChxElyCmFl5oqReFq6YTHgTHRjv%2F%2BiFn3mGG7Na8oINswPTl5yGm5ZDtroewW7yT3ttyhbkCooQxWJ40lBRqPdgsv3GW4kwYN1u5ePlfso5pS8vZJnCRHAcLpfrk7MBbLL2k%2FdgAUfZeLmlGVApeG7oKFZl1aRGT5%2B82JyqrmL2VZA7IjINnAbjBBqK1JHgQvhnArOTTIS6JuXdU8aoOdxiatTi8Tsp4D02g%3D%3D&response-content-disposition=attachment%3B+filename%3Dbrazil_covid19_cities.csv.zip")
-
-zipfile = ZipFile(BytesIO(url_ct_dat.content))
-
-ct_dat = pd.read_csv(zipfile.open(zipfile.namelist()[0]))
+os.system(r"rm -rf corona-virus-brazil")
+del(zipp)
 
 states = np.sort(st_dat.state.unique())
-
-x1 = np.linspace(0, 10, 1000)
 
 app = dash.Dash(__name__)
 app.config.suppress_callback_exceptions = True
 server = app.server
-app.title = "CORONAVAIRUS"
+app.title = "Click Covid"
 
-layout_home = html.Div([
-	html.Div(
-		style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#9015BD", "display":"flex"},
-		children=[
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("States")], href="/page-states", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Cities")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-                        html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("Simulation")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-		],
-	),
-	html.Img(src="/assets/corona_cinza_fundo_Prancheta_1.jpg", style={"margin-left":-8})
+layout_home = html.Div(style={"background-color":"#e3e7ea"},children = [
+	html.Div(style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#f27405", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
+		]),
+	]),
+	html.Div(style={"background-image":'url("/assets/corona_cinza_fundo_Prancheta_1.jpg")', "background-size":"cover", "width":"100vw", "height":"85vh", "margin-left":-8})
+	#~ html.Img(src="/assets/corona_cinza_fundo_Prancheta_1.jpg", style={"margin-left":-8, "height":"100vh", "width":"100vw"})
 ])
 
-graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":500, "height":300, "margin":{"l":40, "r":0, "t":20, "b":30}}}
-
-#~ layout_states = html.Div([
-	#~ html.Div(
-		#~ style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#9015BD", "display":"flex"},
-		#~ children=[
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("States")], href="/page-states", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("Cities")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-		#~ ],
-	#~ ),
-	#~ html.Div(style={"height":20}),
-	#~ html.Div(
-	#~ [
-		#~ html.P(id='drop-out-states', children=['Estado: '], style={"width":60}),    
-		#~ dcc.Dropdown(
-			#~ id="drop-states",
-			#~ options=[{'label': i, 'value': i} for i in states],
-			#~ value=states[0],
-			#~ style={"width":200}
-		#~ ),
-	#~ ],
-	#~ style={"width":300, "display":"flex"}
-	#~ ),
-	#~ dcc.Graph(id='graph-states', figure=graph_states),
-	#~ html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
-#~ ])
+graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
 st = ct_dat[ct_dat.state==states[0]]
 stcts = st.name.unique()
 
-graph_cities = {"data": [{"x":st[st.name==stcts[0]].date, "y":st[st.name==stcts[0]].cases, "name":"Casos", "showlegend":True}, {"x":st[st.name==stcts[0]].date, "y":st[st.name==stcts[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":500, "height":300, "margin":{"l":40, "r":0, "t":20, "b":30}}}
+graph_cities = {"data": [{"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_dat[st_dat.state=="São Paulo"].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_dat[st_dat.state=="São Paulo"].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
-layout_cities = html.Div([
-	html.Div(
-		style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#9015BD", "display":"flex"},
-		children=[
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("States")], href="/page-states", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Cities")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-                        html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("Simulation")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-		],
-	),
-	html.Div(style={"height":20,}),
-	html.Div(
-	[
-		html.P(id='drop-out-states2', children=['Estado:'], style={"width":60}),    
-		dcc.Dropdown(
-			id="drop-states2",
-			options=[{'label': i, 'value': i} for i in states],
-			value="São Paulo",
-			style={"width":200}
-		),
-	],
-	style={"width":300, "display":"flex"}
-	),
-	html.Div(
-	[
-		html.P(id='drop-out-cities', children=['Cidade:'], style={"width":60}),    
-		dcc.Dropdown(
-			id="drop-cities",
-			options=[{"label":"Todo o Estado", "value":0}] + [{'label': i, 'value': i} for i in stcts],
-			value=0,
-			style={"width":200}
-		),
-	],
-	style={"width":300, "display":"flex"}
-	),
-	dcc.Graph(id='graph-cities', figure=graph_states),
-	html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
+layout_cities = html.Div(style={"margin-left":-8,"height":"100","width":"100vw","background-attachment":"fixed", "background-color":"#e3e7ea"},children =[
+	html.Div(style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#f27405", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
+		]),
+	]),
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={}, children=[
+			dcc.Graph(id='graph-cities', figure=graph_cities),
+			html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
+		]),
+		html.Div(style={"width":100}),
+		html.Div(style={"text-align":"center"}, children=[
+			html.Div(style={"width":300, "display":"flex"}, children=[
+				html.P(id='drop-out-states2', children=['Estado:'], style={"width":60}),    
+				dcc.Dropdown(
+					id="drop-states2",
+					options=[{'label': i, 'value': i} for i in states],
+					value="São Paulo",
+					style={"width":200}
+				),
+			]),
+			html.Div(style={"width":300, "display":"flex"}, children=[
+				html.P(id='drop-out-cities', children=['Cidade:'], style={"width":60}),    
+				dcc.Dropdown(
+					id="drop-cities",
+					options=[{"label":"Todo o Estado", "value":0}] + [{'label': i, 'value': i} for i in stcts],
+					value=0,
+					style={"width":200}
+				),
+			]),
+		]),
+	])
 ])
 
-layout_equipe = html.Div([
-	html.Div(
-		style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#9015BD", "display":"flex"},
-		children=[
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("States")], href="/page-states", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Cities")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-                        html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("Simulation")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-		],
-	),
+layout_equipe = html.Div(style={"margin-left":-8,"height":"100","width":"100vw","background-attachment":"fixed", "background-color":"#e3e7ea"},children =[
+	html.Div(style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#f27405", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
+		]),
+	]),
 	html.Div(style={"height":20}),
 	html.Div(style={"height":300, "width":"100vw", "margin-left":-8, "display":"flex"}, children=[
 		html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":400, "text-align":"center"},
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
 				children=[
-					html.Img(src="/assets/covid_bolinha.png", style={"width":200, "height":200}),
-					html.P(["Corona 1"]),
-					html.P(["Estudante da Universidade dos Coronas"])
+					html.Img(src="/assets/Lorena_Lima.jpg", style={"width":200, "height":200}),
+					html.P(["Lorena Lima"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/_madame_satan/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/3527099707324024", target="_blank")
 				],
 			),
 		html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":400, "text-align":"center"},
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
 				children=[
-					html.Img(src="/assets/covid_bolinha.png", style={"width":200, "height":200}),
-					html.P(["Corona 2"]),
-					html.P(["Estudante da Universidade dos Coronas"])
+					html.Img(src="/assets/Victor_Lima.jpg", style={"width":200, "height":200}),
+					html.P(["Victor Porto"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/victorportog_/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/5193576100573774", target="_blank")
 				],
 			),
 		html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":400, "text-align":"center"},
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
 				children=[
-					html.Img(src="/assets/covid_bolinha.png", style={"width":200, "height":200}),
-					html.P(["Corona 3"]),
-					html.P(["Estudante da Universidade dos Coronas"])
+					html.Img(src="/assets/Jose_Luiz.jpg", style={"width":200, "height":200}),
+					html.P(["José Luiz"]),
+					html.P(["Universidade de Michigan"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/joseluiz_vargas/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/4939980150228138", target="_blank")
 				],
 			),
 		html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":400, "text-align":"center"},
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
 				children=[
-					html.Img(src="/assets/covid_bolinha.png", style={"width":200, "height":200}),
-					html.P(["Corona 4"]),
-					html.P(["Estudante da Universidade dos Coronas"])
+					html.Img(src="/assets/Ludmila_Lima.jpg", style={"width":200, "height":200}),
+					html.P(["Ludmila Lima"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/Ludlima_m/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/7173638953043122", target="_blank")
+				],
+			),
+
+                html.Div(
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
+				children=[
+					html.Img(src="/assets/Tabata_Luiza.jpg", style={"width":200, "height":200}),
+					html.P(["Tábata Luiza"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/batatalsa/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/5177569135658501", target="_blank")
 				],
 			),
 	]
 	),
+        html.Div(style={"height":20}),
+	html.Div(style={"height":300, "width":"100vw", "margin-left":-8, "display":"flex"}, children=[
+		html.Div(
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
+				children=[
+					html.Img(src="/assets/Igor_Reis.jpg", style={"width":200, "height":200}),
+					html.P(["Igor Reis"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/igrorreis/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/0168960446714554", target="_blank")
+				],
+			),
+		html.Div(
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
+				children=[
+					html.Img(src="/assets/Felipe_Fontinele.jpg", style={"width":200, "height":200}),
+					html.P(["Felipe Fontinele"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/feradofogo/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/1862967944333863", target="_blank")
+				],
+			),
+		html.Div(
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
+				children=[
+					html.Img(src="/assets/Pedro_Cintra.jpg", style={"width":200, "height":200}),
+					html.P(["Pedro Cintra"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/pedrocintra52/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/1191661313631770", target="_blank")
+				],
+			),
+		html.Div(
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
+				children=[
+					html.Img(src="/assets/Joao_Valeriano.jpg", style={"width":200, "height":200}),
+					html.P(["João Valeriano"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/joaopedro_vm/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/2757621633925765", target="_blank")
+				],
+			),
+                html.Div(
+				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":300, "width":"25vw", "text-align":"center"},
+				children=[
+					html.Img(src="/assets/Joao_Vitor.jpg", style={"width":200, "height":200}),
+					html.P(["João Vitor"]),
+					html.P(["Universidade de Brasília"]),
+					html.A([html.Img(src="/assets/ig.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="https://www.instagram.com/viitor_jvc/", target="_blank"),
+					html.A([html.Img(src="/assets/lattes.png", style={"width":20, "height":20, "padding-left":5, "padding-right":5})], href="http://lattes.cnpq.br/0516093970342061", target="_blank")
+				],
+			),
+	]
+	),
+        
+
+
+        
 ])
 
+[I,M,CT,t] = f(0.071,1/5.2,0.053,0.00137,0.11)
+graph_sim = {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.05*CT, "name":"Casos Acumulados", "showlegend":True}], "layout":{"width":800, "height":500, "margin":{"l":30, "r":0, "t":20,"b":30}}}
 
-layout_simulation = html.Div([
-	html.Div(
-		style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#9015BD", "display":"flex"},
-		children=[
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			#~ html.Div(
-				#~ style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				#~ children=[
-					#~ dcc.Link([html.H1("States")], href="/page-states", style={"color":"black", "text-decoration":"none"}),
-				#~ ],
-			#~ ),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Cities")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-			html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("Simulation")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-                        html.Div(
-				style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":300, "text-align":"center"},
-				children=[
-					html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
-				],
-			),
-		],
-	),
-################################################
-	html.Div(style={"height":20,}),
-        html.Div(children=[
-                html.H2(myheading),
-                 dcc.Graph(
-                 id='flyingdog',
-                 figure=beer_fig
-                )]),
-                html.Div([
-                            html.P(id='slider-output-container-a'),    
-                            dcc.Slider(
-                                id='my-slider-a',
-                                min=0.03,
-                                max=0.2,
-                                step=0.0017,
-                                value=0.071,
-                        ),
-                    ],
-                    style={"width":500}
-                    ),
+layout_simulation = html.Div(style={"margin-left":-8,"margin-bottom":+10,"height":"100%","width":"100vw","background-attachment":"fixed", "background-color":"#e3e7ea"},children =[
+	html.Div(style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#f27405", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
+		]),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
+		]),
+	]),
+	
+	html.Div(style={"height":20}),
+	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={}, children=[
+			dcc.Graph(figure=graph_sim, id="graph-sim"),
+		]),
+		html.Div(style={"width":50}),
+		html.Div(style={"text-align":"center"}, children=[
+			html.Div(style={"width":400}, children=[
+				html.P(id='slider-output-container-a'),    
+				dcc.Slider(
+					id='my-slider-a',
+					min=0.03,
+					#max=0.2,
+					#step=0.0017,
+                                        max = 0.2,
+                                        step = 0.01,
+					value=0.071,
+				),
+			]),
                 
-                html.Div([
-                            html.P(id='slider-output-container-c'),    
-                            dcc.Slider(
-                                id='my-slider-c',
-                                min=0.06,
-                                max=1,
-                                step=0.0094,
-                                value=1/5.2,
-                        ),
-                    ],
-                    style={"width":500}
-                    ),
+			html.Div(style={"width":400}, children=[
+				html.P(id='slider-output-container-c'),    
+				dcc.Slider(
+					id='my-slider-c',
+					min=0.06,
+					max=2,
+					step=0.0094,
+					value=1/5.2,
+				),
+			]),
 
 
-                html.Div([
-                            html.P(id='slider-output-container-mi'),    
-                            dcc.Slider(
-                                id='my-slider-mi',
-                                min=0.03,
-                                max=0.2,
-                                step=0.0017,
-                                value=0.053,
-                        ),
-                    ],
-                    style={"width":500}
-                    ),
+			html.Div(style={"width":400}, children=[
+				html.P(id='slider-output-container-mi'),    
+				dcc.Slider(
+					id='my-slider-mi',
+					min=0.03,
+					#max=0.2,
+                                        max = 1,
+					step=0.0017,
+					value=0.053,
+				),
+			]),
 
 
-                html.Div([
-                            html.P(id='slider-output-container-d'),    
-                            dcc.Slider(
-                                id='my-slider-d',
-                                min=0.000913,
-                                max=0.0027,
-                                step=0.00001787,
-                                value=0.00137,
-                        ),
-                    ],
-                    style={"width":500}
-                    ),
+			html.Div(style={"width":400}, children=[
+				html.P(id='slider-output-container-d'),    
+				dcc.Slider(
+					id='my-slider-d',
+					min=0.000913,
+					max=0.006,
+					step=0.00001787,
+					value=0.00137,
+				),
+			]),
 
 
-                html.Div([
-                            html.P(id='slider-output-container-Pb'),    
-                            dcc.Slider(
-                                id='my-slider-Pb',
-                                min=0,
-                                max=1,
-                                step=0.01,
-                                value=0.11,
-                        ),
-                    ],
-                    style={"width":500}
-                    ),
-                
-                html.A('Github', href=githublink),
-                html.Br(),
-                html.A('Source', href=sourceurl),
-                ]
-            )
-         
-
-######################################################
+			html.Div(style={"width":400}, children=[
+				html.P(id='slider-output-container-Pb'),    
+				dcc.Slider(
+					id='my-slider-Pb',
+					min=0,
+					max=1,
+					step=0.01,
+					value=0.11,
+				),
+			]),
+		]),
+	])
+])
 
 url_bar_and_content_div = html.Div([
     dcc.Location(id='url', refresh=True),
@@ -775,9 +680,9 @@ app.layout = url_bar_and_content_div
 app.validation_layout = html.Div([
 	url_bar_and_content_div,
     layout_home,
-    #~ layout_states,
 	layout_cities,
-	layout_equipe
+	layout_equipe,
+	layout_simulation
 ])
 
 @app.callback(Output('page-content', 'children'),
@@ -787,19 +692,29 @@ def display_page(pathname):
 		return layout_cities
 	elif pathname == "/page-equipe":
 		return layout_equipe
-	#~ elif pathname == "/page-states":
-		#~ return layout_states
 	elif pathname == "/page-simulation":
 		return layout_simulation
 	else:
 		return layout_home
 
-#~ @app.callback(
-    #~ Output('graph-states', 'figure'),
-    #~ [Input('drop-states', 'value')])
-#~ def update_output(value):
+@app.callback(
+    [Output('slider-output-container-a', 'children'), Output('slider-output-container-c', 'children'), Output('slider-output-container-mi', 'children'), Output('slider-output-container-d', 'children'), Output('slider-output-container-Pb', 'children'), Output('graph-sim', 'figure')],
+    [Input('my-slider-a', 'value'),
+     Input('my-slider-c', 'value'),
+     Input('my-slider-mi', 'value'),
+     Input('my-slider-d', 'value'),
+     Input('my-slider-Pb', 'value')])
+def update_func_a(value_1,value_2,value_3,value_4,value_5):
 
-	#~ return {"data": [{"x":st_dat[st_dat.state==value].date, "y":st_dat[st_dat.state==value].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==value].date, "y":st_dat[st_dat.state==value].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":500, "height":300, "margin":{"l":40, "r":0, "t":20, "b":30}}}
+    a = value_1
+    c = value_2
+    mi = value_3
+    d = value_4
+    Pb = value_5
+    [I,M,CT,t] = f(a,c,mi,d,Pb)
+    
+
+    return 'Taxa de recuperação: {:.4f}'.format(value_1), 'Tempo de Incubação: {:.4f}'.format(value_2), 'Probabilidade de Morte: {:.4f}'.format(value_3), 'Taxa de Reinfecção: {:.4f}'.format(value_4), 'Probabilidade de Infecção: {:.4f}'.format(value_5), {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.05*CT, "name":"Casos Críticos", "showlegend":True}], "layout":{"width":800, "height":500, "margin":{"l":30, "r":0, "t":20,"b":30}}},
 
 @app.callback(
     [Output('drop-cities', 'options'), Output('graph-cities', 'figure')],
@@ -811,50 +726,11 @@ def update_output(st, ct):
 	
 	if(ct == 0):
 		
-		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":500, "height":300, "margin":{"l":40, "r":0, "t":20, "b":30}}}
+		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 	
 	else:
 		
-		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].cases, "name":"Casos", "showlegend":True}, {"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":500, "height":300, "margin":{"l":40, "r":0, "t":20, "b":30}}}
+		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].cases, "name":"Casos", "showlegend":True}, {"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
-
-@app.callback(
-    [Output('slider-output-container-a', 'children'), Output('flyingdog', 'figure')],
-    [Input('my-slider-a', 'value'),
-     Input('my-slider-c', 'value'),
-     Input('my-slider-mi', 'value'),
-     Input('my-slider-d', 'value'),
-     Input('my-slider-Pb', 'value')])
-
-def update_func_a(value_1,value_2,value_3,value_4,value_5):
-
-    a = value_1
-    c = value_2
-    mi = value_3
-    d = value_4
-    Pb = value_5
-    [I,M,CT,t] = f(a,c,mi,d,Pb)
-    
-
-    return  (html.P('Parâmetros '),html.P('Taxa de recuperação: {}'.format(value_1)),
-            html.P('Tempo de Incubação: {}'.format(value_2)),
-            html.P('Probabilidade de Morte: {}'.format(value_3)),
-            html.P('Taxa de Reinfecção: {}'.format(value_4)),
-            html.P('Probabilidade de Infecção: {}'.format(value_5))),{
-            "data": [{"x":t,
-                      "y":I,
-                      "name":"Infectados",
-                      "showlegend":True},
-                     {"x":t,
-                      "y":M,
-                      "name":"Mortos",
-                      "showlegend":True},
-                     {"x":t,
-                      "y":0.05*CT,
-                      "name":"Casos Acumulados",
-                      "showlegend":True}]},
-            
-
- 
 if __name__ == '__main__':
     app.run_server(debug=True)

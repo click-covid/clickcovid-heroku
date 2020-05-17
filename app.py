@@ -381,7 +381,7 @@ layout_home = html.Div([
 			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", className="bar"),
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	html.Div(style={"background-image":'url("/assets/corona_cinza_fundo_Prancheta_1.jpg")', "background-size":"cover", "width":"100vw", "height":"85vh", "margin-left":-8})
@@ -410,7 +410,7 @@ layout_cities = html.Div([
 			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", className="bar"),
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	html.Div(style={"height":20,}),	
@@ -458,7 +458,7 @@ layout_equipe = html.Div([
 			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", className="bar"),
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	html.Div(style={"height":20}),
@@ -566,19 +566,19 @@ graph_sim = {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"
 layout_simulation = html.Div([
 	html.Div(style={"height":100, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#F29C04", "display":"flex"}, children=[
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			dcc.Link([html.H1("Click Covid")], href="/", style={"color":"black", "text-decoration":"none"}),
+			dcc.Link([html.H1("Click Covid")], href="/", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			dcc.Link([html.H1("Cidades")], href="/page-cities", style={"color":"black", "text-decoration":"none"}),
+			dcc.Link([html.H1("Cidades")], href="/page-cities", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"}, children=[
-			html.A([html.H1("Simulação")], href="/page-simulation", style={"color":"black", "text-decoration":"none"}),
+			html.A([html.H1("Simulação")], href="/page-simulation", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			dcc.Link([html.H1("Equipe")], href="/page-equipe", style={"color":"black", "text-decoration":"none"}),
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding":10, "height":100, "width":"20vw", "text-align":"center"},children=[
-			html.A([html.H1("GitHub")], href="https://github.com/joaopedro-vm/flying-dog-beers", target="_blank", style={"color":"black", "text-decoration":"none"}),
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	
