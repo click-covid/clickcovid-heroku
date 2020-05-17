@@ -387,8 +387,7 @@ layout_home = html.Div([
 			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
-	html.Div(style={"background-image":'url("/assets/corona_cinza_fundo_Prancheta_1.jpg")', "background-size":"cover", "width":"100vw", "height":"85vh", "margin-left":-8})
-	#~ html.Img(src="/assets/corona_cinza_fundo_Prancheta_1.jpg", style={"margin-left":-8, "height":"100vh", "width":"100vw"})
+	#~ html.Div(style={"background-image":'url("/assets/corona_cinza_fundo_Prancheta_1.jpg")', "background-size":"cover", "width":"100vw", "height":"85vh", "margin-left":-8})
 ])
 
 graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
