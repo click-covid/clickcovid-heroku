@@ -391,7 +391,7 @@ layout_home = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-1
 	#~ html.Div(style={"background-image":'url("/assets/corona_cinza_fundo_Prancheta_1.jpg")', "background-size":"cover", "width":"100vw", "height":"85vh", "margin-left":-8})
 ])
 
-graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
+graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
 st = ct_dat[ct_dat.state==states[0]]
 stcts = st.name.unique()
@@ -423,12 +423,12 @@ layout_cities = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":
 	html.Div(style={"height":20,}),	
 	html.Div(style={"display":"flex"}, children=[
 		html.Div(style={"width":"1%"}),
-		html.Div(style={"width":"49%"}, children=[
+		html.Div(style={"width":"69%"}, children=[
 			dcc.Graph(id='graph-cities', figure=graph_cities),
 			html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
 		]),
-		html.Div(style={"width":"10%"}),
-		html.Div(style={"width":"40%", "text-align":"center"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"38%", "text-align":"center"}, children=[
 			html.Div(style={"width":"100%", "display":"flex"}, children=[
 				html.P(id='drop-out-states2', children=['Estado:'], style={"width":"20%"}),    
 				dcc.Dropdown(
@@ -754,11 +754,11 @@ def update_output(st, ct):
 	
 	if(ct == 0):
 		
-		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
+		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
 	
 	else:
 		
-		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].cases, "name":"Casos", "showlegend":True}, {"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
+		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].cases, "name":"Casos", "showlegend":True}, {"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
 if __name__ == '__main__':
     app.run_server(debug=True)
