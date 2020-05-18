@@ -520,7 +520,7 @@ graph_cities = {"data": [{"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_da
 
 layout_cities = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
 	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "padding-top":"29.4%", "width":"20%", "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
 			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
 		]),
