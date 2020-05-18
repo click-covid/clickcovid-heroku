@@ -366,7 +366,7 @@ app.config.suppress_callback_exceptions = True
 server = app.server
 app.title = "Click Covid - Ferramenta de Informação Interativa"
 
-layout_home = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
+layout_home = html.Div(style={"margin-left":-8, "margin-top":-10}, children=[
 	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
