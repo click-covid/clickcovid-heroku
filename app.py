@@ -482,35 +482,54 @@ layout_socio = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-
 			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
+	
 	html.Div(style={"height":20,}),	
 	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"1%"}),
-		html.Div(style={"width":"69%"}, children=[
-			dcc.Graph(id='graph-cities', figure=graph_cities),
-			html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Leitos_de_UTI_para_cada_10_mil_habitantes.svg", style={"width":"100%"}),
 		]),
 		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"38%", "text-align":"center"}, children=[
-			html.Div(style={"width":"100%", "display":"flex"}, children=[
-				html.P(id='drop-out-states2', children=['Estado:'], style={"width":"20%"}),    
-				dcc.Dropdown(
-					id="drop-states2",
-					options=[{'label': i, 'value': i} for i in states],
-					value="São Paulo",
-					style={"width":"80%"}
-				),
-			]),
-			html.Div(style={"width":"100%", "display":"flex"}, children=[
-				html.P(id='drop-out-cities', children=['Cidade:'], style={"width":"20%"}),    
-				dcc.Dropdown(
-					id="drop-cities",
-					options=[{"label":"Todo o Estado", "value":0}] + [{'label': i, 'value': i} for i in stcts],
-					value=0,
-					style={"width":"80%"}
-				),
-			]),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fontes: ", html.A(["AMIB"], href="https://www.amib.com.br/censo/Analise_de_Dados_UTI_Final_Site_2.pdf", target="_blank"), "; ", html.A(["IBGE"], href="https://cidades.ibge.gov.br/brasil/pesquisa/23/25888", target="_blank"),]),
 		]),
-	])
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Proporcao_da_populacao_abastecimento_de_agua_por_rede_geral.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/multidominio/condicoes-de-vida-desigualdade-e-pobreza/9221-sintese-de-indicadores-sociais.html?=&t=resultados&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19", target="_blank"),]),
+		]),
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Leitos_de_UTI_para_cada_10_mil_habitantes.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fonte: ", html.A(["AMIB"], href="https://www.amib.com.br/censo/Analise_de_Dados_UTI_Final_Site_2.pdf", target="_blank"),]),
+		]),
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Adensamento_Excessivo_.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9127-pesquisa-nacional-por-amostra-de-domicilios.html?=&t=o-que-e", target="_blank"),]),
+		]),
+	]),
 ])
 
 layout_equipe = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
