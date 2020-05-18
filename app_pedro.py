@@ -366,195 +366,107 @@ app.config.suppress_callback_exceptions = True
 server = app.server
 app.title = "Click Covid"
 
-layout_home = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
-	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
+layout_home = html.Div([
+	html.Div(style={"height":80, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#F29C04", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Colaboradores")], href="/page-colab", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	#~ html.Div(style={"background-image":'url("/assets/corona_cinza_fundo_Prancheta_1.jpg")', "background-size":"cover", "width":"100vw", "height":"85vh", "margin-left":-8})
 ])
 
-graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
+graph_states = {"data": [{"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==states[0]].date, "y":st_dat[st_dat.state==states[0]].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
 st = ct_dat[ct_dat.state==states[0]]
 stcts = st.name.unique()
 
-graph_cities = {"data": [{"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_dat[st_dat.state=="São Paulo"].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_dat[st_dat.state=="São Paulo"].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
+graph_cities = {"data": [{"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_dat[st_dat.state=="São Paulo"].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state=="São Paulo"].date, "y":st_dat[st_dat.state=="São Paulo"].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
-layout_cities = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
-	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
+layout_cities = html.Div([
+	html.Div(style={"height":80, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#F29C04", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Colaboradores")], href="/page-colab", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	html.Div(style={"height":20,}),	
 	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"1%"}),
-		html.Div(style={"width":"69%"}, children=[
+		html.Div(style={}, children=[
 			dcc.Graph(id='graph-cities', figure=graph_cities),
 			html.P(["Fonte: ", html.A(["kaggle/unanimad/corona-virus-brazil"], href="https://www.kaggle.com/unanimad/corona-virus-brazil", target="_blank")]),
 		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"38%", "text-align":"center"}, children=[
-			html.Div(style={"width":"100%", "display":"flex"}, children=[
-				html.P(id='drop-out-states2', children=['Estado:'], style={"width":"20%"}),    
+		html.Div(style={"width":100}),
+		html.Div(style={"text-align":"center"}, children=[
+			html.Div(style={"width":300, "display":"flex"}, children=[
+				html.P(id='drop-out-states2', children=['Estado:'], style={"width":60}),    
 				dcc.Dropdown(
 					id="drop-states2",
 					options=[{'label': i, 'value': i} for i in states],
 					value="São Paulo",
-					style={"width":"80%"}
+					style={"width":200}
 				),
 			]),
-			html.Div(style={"width":"100%", "display":"flex"}, children=[
-				html.P(id='drop-out-cities', children=['Cidade:'], style={"width":"20%"}),    
+			html.Div(style={"width":300, "display":"flex"}, children=[
+				html.P(id='drop-out-cities', children=['Cidade:'], style={"width":60}),    
 				dcc.Dropdown(
 					id="drop-cities",
 					options=[{"label":"Todo o Estado", "value":0}] + [{'label': i, 'value': i} for i in stcts],
 					value=0,
-					style={"width":"80%"}
+					style={"width":200}
 				),
 			]),
 		]),
 	])
 ])
 
-layout_socio = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
-	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
+layout_equipe = html.Div([
+	html.Div(style={"height":80, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#F29C04", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Colaboradores")], href="/page-colab", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
-		]),
-	]),
-	
-	html.Div(style={"height":20,}),	
-	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Leitos_de_UTI_para_cada_10_mil_habitantes.svg", style={"width":"100%"}),
-		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"20%"}, children=[
-			html.P(["Fontes: ", html.A(["AMIB"], href="https://www.amib.com.br/censo/Analise_de_Dados_UTI_Final_Site_2.pdf", target="_blank"), "; ", html.A(["IBGE"], href="https://cidades.ibge.gov.br/brasil/pesquisa/23/25888", target="_blank"),]),
-		]),
-	]),
-	
-	html.Div(style={"height":20,}),	
-	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Proporcao_da_populacao_abastecimento_de_agua_por_rede_geral.svg", style={"width":"100%"}),
-		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"20%"}, children=[
-			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/multidominio/condicoes-de-vida-desigualdade-e-pobreza/9221-sintese-de-indicadores-sociais.html?=&t=resultados&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19", target="_blank"),]),
-		]),
-	]),
-	
-	html.Div(style={"height":20,}),	
-	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Leitos_de_UTI_por_estado.svg", style={"width":"100%"}),
-		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"20%"}, children=[
-			html.P(["Fonte: ", html.A(["AMIB"], href="https://www.amib.com.br/censo/Analise_de_Dados_UTI_Final_Site_2.pdf", target="_blank"),]),
-		]),
-	]),
-	
-	html.Div(style={"height":20,}),	
-	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Adensamento_Excessivo_.svg", style={"width":"100%"}),
-		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"20%"}, children=[
-			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9127-pesquisa-nacional-por-amostra-de-domicilios.html?=&t=o-que-e", target="_blank"),]),
-		]),
-	]),
-])
-
-layout_equipe = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
-	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	html.Div(style={"height":20}),
@@ -638,29 +550,25 @@ layout_equipe = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":
 	),
 ])
 
-layout_thanks = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
-	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
+layout_colab = html.Div([
+	html.Div(style={"height":80, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#F29C04", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Colaboradores")], href="/page-colab", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	html.Div(style={"height":20}),
@@ -690,29 +598,25 @@ layout_thanks = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":
 [I,M,CT,t] = f(16,5.2,14,730,0.11,0.5,10,70,0.007)
 graph_sim = {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.015*CT, "name":"Casos Críticos Acumulados", "showlegend":True}], "layout":{"width":800, "height":500, "margin":{"l":30, "r":0, "t":20,"b":30}}}
 
-layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
-	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
+layout_simulation = html.Div([
+	html.Div(style={"height":80, "width":"100vw", "margin-left":-8, "margin-top":-10, "background-color":"#F29C04", "display":"flex"}, children=[
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Click Covid")], href="/", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Cidades")], href="/page-cities", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"}, children=[
+			html.A([html.H1("Simulação")], href="/page-simulation", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"}, children=[
-			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Equipe")], href="/page-equipe", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			dcc.Link([html.H1("Colaboradores")], href="/page-colab", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
-		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"15%", "text-align":"center", "vertical-align":"middle"},children=[
-			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
+		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":80, "width":"17vw", "text-align":"center", "vertical-align":"middle"},children=[
+			html.A([html.H1("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
 	
@@ -844,9 +748,8 @@ app.validation_layout = html.Div([
 	url_bar_and_content_div,
     layout_home,
 	layout_cities,
-	layout_socio,
 	layout_equipe,
-	layout_thanks,
+	layout_colab,
 	layout_simulation
 ])
 
@@ -857,10 +760,8 @@ def display_page(pathname):
 		return layout_cities
 	elif pathname == "/page-equipe":
 		return layout_equipe
-	elif pathname == "/page-thanks":
-		return layout_thanks
-	elif pathname == "/page-socio":
-		return layout_socio
+	elif pathname == "/page-colab":
+		return layout_colab
 	elif pathname == "/page-simulation":
 		return layout_simulation
 	else:
@@ -903,11 +804,11 @@ def update_output(st, ct):
 	
 	if(ct == 0):
 		
-		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
+		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].cases, "name":"Casos", "showlegend":True}, {"x":st_dat[st_dat.state==st].date, "y":st_dat[st_dat.state==st].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 	
 	else:
 		
-		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].cases, "name":"Casos", "showlegend":True}, {"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20, "b":30}}}
+		return [{"label":"Todo o Estado", "value":0}]+[{'label': i, 'value': i} for i in stcts_], {"data": [{"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].cases, "name":"Casos", "showlegend":True}, {"x":st_[st_.name==ct].date, "y":st_[st_.name==ct].deaths, "name":"Mortes", "showlegend":True}], "layout":{"width":800, "height":450, "margin":{"l":30, "r":0, "t":20, "b":30}}}
 
 if __name__ == '__main__':
     app.run_server(debug=True)
