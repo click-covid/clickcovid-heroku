@@ -370,27 +370,26 @@ layout_home = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-1
 	html.Div(style={"height":70, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
 		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":238, "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.Img(src="/assets/click_covid.jpg", style={"height":70, "margin":{"l":0, "r":0, "t":0, "b":0}})], href="/")
-			#~ dcc.Link([html.H2("Click Covid")], href="/", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.H3("Cidades")], href="/page-cities", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"}, children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"}, children=[
 			html.A([html.H3("Simulação")], href="/page-simulation", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"20%", "text-align":"center", "vertical-align":"middle"}, children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"}, children=[
 			html.A([html.H3("Análise Socioeconômica")], href="/page-socio", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.H3("FAQ")], href="/page-faq", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.H3("Equipe")], href="/page-equipe", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"},children=[
 			dcc.Link([html.H3("Agradecimentos")], href="/page-thanks", className="bar"),
 		]),
-		html.Div(style={"margin":{"l":0, "r":0, "t":0, "b":0}, "height":70, "width":"10%", "text-align":"center", "vertical-align":"middle"},children=[
+		html.Div(style={"margin-left":30, "margin-right":30, "text-align":"center", "vertical-align":"middle"},children=[
 			html.A([html.H3("GitHub")], href="https://github.com/click-covid/clickcovid-heroku", target="_blank", className="bar"),
 		]),
 	]),
