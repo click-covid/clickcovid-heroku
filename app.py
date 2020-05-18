@@ -511,7 +511,7 @@ layout_socio = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-
 	html.Div(style={"display":"flex"}, children=[
 		html.Div(style={"width":"2%"}),
 		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Leitos_de_UTI_para_cada_10_mil_habitantes.svg", style={"width":"100%"}),
+			html.Img(src="/assets/Leitos_de_UTI_por_estado.svg", style={"width":"100%"}),
 		]),
 		html.Div(style={"width":"2%"}),
 		html.Div(style={"width":"20%"}, children=[
