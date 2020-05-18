@@ -487,31 +487,7 @@ layout_socio = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-
 	html.Div(style={"display":"flex"}, children=[
 		html.Div(style={"width":"2%"}),
 		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Leitos_de_UTI_para_cada_10_mil_habitantes.svg", style={"width":"100%"}),
-		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"20%"}, children=[
-			html.P(["Fontes: ", html.A(["AMIB"], href="https://www.amib.com.br/censo/Analise_de_Dados_UTI_Final_Site_2.pdf", target="_blank"), "; ", html.A(["IBGE"], href="https://cidades.ibge.gov.br/brasil/pesquisa/23/25888", target="_blank"),]),
-		]),
-	]),
-	
-	html.Div(style={"height":20,}),	
-	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Proporcao_da_populacao_abastecimento_de_agua_por_rede_geral.svg", style={"width":"100%"}),
-		]),
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"20%"}, children=[
-			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/multidominio/condicoes-de-vida-desigualdade-e-pobreza/9221-sintese-de-indicadores-sociais.html?=&t=resultados&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19", target="_blank"),]),
-		]),
-	]),
-	
-	html.Div(style={"height":20,}),	
-	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={"width":"2%"}),
-		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Leitos_de_UTI_por_estado.svg", style={"width":"100%"}),
+			html.Img(src="/assets/Leitos_de_UTI_por_estado2.svg", style={"width":"100%"}),
 		]),
 		html.Div(style={"width":"2%"}),
 		html.Div(style={"width":"20%"}, children=[
@@ -523,11 +499,59 @@ layout_socio = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-
 	html.Div(style={"display":"flex"}, children=[
 		html.Div(style={"width":"2%"}),
 		html.Div(style={"width":"60%"}, children=[
-			html.Img(src="/assets/Adensamento_Excessivo_.svg", style={"width":"100%"}),
+			html.Img(src="/assets/Leitos_de_UTI_para_cada_10_mil_habitantes2.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fontes: ", html.A(["AMIB"], href="https://www.amib.com.br/censo/Analise_de_Dados_UTI_Final_Site_2.pdf", target="_blank"), "; ", html.A(["IBGE"], href="https://cidades.ibge.gov.br/brasil/pesquisa/23/25888", target="_blank"),]),
+		]),
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Proporcao_da_populacao_abastecimento_de_agua_por_rede_geral2.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/multidominio/condicoes-de-vida-desigualdade-e-pobreza/9221-sintese-de-indicadores-sociais.html?=&t=resultados&utm_source=covid19&utm_medium=hotsite&utm_campaign=covid_19", target="_blank"),]),
+		]),
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Porcentagem_da_populacao_sem_acesso_a_saneamento_basico2.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html?=&t=o-que-e", target="_blank"),]),
+		]),
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Adensamento_Excessivo_2.svg", style={"width":"100%"}),
 		]),
 		html.Div(style={"width":"2%"}),
 		html.Div(style={"width":"20%"}, children=[
 			html.P(["Fonte: ", html.A(["IBGE"], href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9127-pesquisa-nacional-por-amostra-de-domicilios.html?=&t=o-que-e", target="_blank"),]),
+		]),
+	]),
+	
+	html.Div(style={"height":20,}),	
+	html.Div(style={"display":"flex"}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"60%"}, children=[
+			html.Img(src="/assets/Porcentagem_da_populacao_vivendo_em_situacao_de_adensamento_excessivo2.svg", style={"width":"100%"}),
+		]),
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"20%"}, children=[
+			html.P(["Fonte: ", html.A(["IBG"], href="https://www.ibge.gov.br/estatisticas/sociais/trabalho/9171-pesquisa-nacional-por-amostra-de-domicilios-continua-mensal.html?=&t=o-que-e", target="_blank"),]),
 		]),
 	]),
 ])
