@@ -601,7 +601,7 @@ layout_thanks = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":
 ])
 
 [I,M,CT,t] = f(0.071,1/5.2,0.053,0.00137,0.11)
-graph_sim = {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.05*CT, "name":"Casos Acumulados", "showlegend":True}], "layout":{"width":800, "height":500, "margin":{"l":30, "r":0, "t":20,"b":30}}}
+graph_sim = {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.05*CT, "name":"Casos Acumulados", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20,"b":30}}}
 
 layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-top":-10}, children=[
 	html.Div(style={"height":50, "width":"100%", "background-color":"#F29C04", "display":"flex"}, children=[
@@ -627,14 +627,14 @@ layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-t
 	]),
 	
 	html.Div(style={"height":20}),
-	
 	html.Div(style={"display":"flex"}, children=[
-		html.Div(style={}, children=[
+		html.Div(style={"width":"1%"}),
+		html.Div(style={"width":"59%"}, children=[
 			dcc.Graph(figure=graph_sim, id="graph-sim"),
 		]),
-		html.Div(style={"width":50}),
-		html.Div(style={"text-align":"center"}, children=[
-			html.Div(style={"width":400}, children=[
+		html.Div(style={"width":"2%"}),
+		html.Div(style={"width":"38%", "text-align":"center"}, children=[
+			html.Div(style={"width":"100%"}, children=[
 				html.P(id='slider-output-container-a'),    
 				dcc.Slider(
 					id='my-slider-a',
@@ -645,7 +645,7 @@ layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-t
 				),
 			]),
                 
-			html.Div(style={"width":400}, children=[
+			html.Div(style={"width":"100%"}, children=[
 				html.P(id='slider-output-container-c'),    
 				dcc.Slider(
 					id='my-slider-c',
@@ -657,7 +657,7 @@ layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-t
 			]),
 
 
-			html.Div(style={"width":400}, children=[
+			html.Div(style={"width":"100%"}, children=[
 				html.P(id='slider-output-container-mi'),    
 				dcc.Slider(
 					id='my-slider-mi',
@@ -669,7 +669,7 @@ layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-t
 			]),
 
 
-			html.Div(style={"width":400}, children=[
+			html.Div(style={"width":"100%"}, children=[
 				html.P(id='slider-output-container-d'),    
 				dcc.Slider(
 					id='my-slider-d',
@@ -681,7 +681,7 @@ layout_simulation = html.Div(style={"width":"100vw", "margin-left":-8, "margin-t
 			]),
 
 
-			html.Div(style={"width":400}, children=[
+			html.Div(style={"width":"100%"}, children=[
 				html.P(id='slider-output-container-Pb'),    
 				dcc.Slider(
 					id='my-slider-Pb',
@@ -742,7 +742,7 @@ def update_func_a(value_1,value_2,value_3,value_4,value_5):
     [I,M,CT,t] = f(a,c,mi,d,Pb)
     
 
-    return 'Taxa de recuperação: {:.4f}'.format(value_1), 'Tempo de Incubação: {:.4f}'.format(value_2), 'Probabilidade de Morte: {:.4f}'.format(value_3), 'Taxa de Reinfecção: {:.4f}'.format(value_4), 'Probabilidade de Infecção: {:.4f}'.format(value_5), {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.05*CT, "name":"Casos Acumulados", "showlegend":True}], "layout":{"width":800, "height":500, "margin":{"l":30, "r":0, "t":20,"b":30}}},
+    return 'Taxa de recuperação: {:.4f}'.format(value_1), 'Tempo de Incubação: {:.4f}'.format(value_2), 'Probabilidade de Morte: {:.4f}'.format(value_3), 'Taxa de Reinfecção: {:.4f}'.format(value_4), 'Probabilidade de Infecção: {:.4f}'.format(value_5), {"data": [{"x":t, "y":I, "name":"Infectados", "showlegend":True}, {"x":t, "y":M, "name":"Mortos", "showlegend":True}, {"x":t, "y":0.05*CT, "name":"Casos Acumulados", "showlegend":True}], "layout":{"width":"100%", "margin":{"l":30, "r":0, "t":20,"b":30}}},
 
 @app.callback(
     [Output('drop-cities', 'options'), Output('graph-cities', 'figure')],
